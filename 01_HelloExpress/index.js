@@ -20,6 +20,7 @@ app.get('/', (req, res) => {
     // 调用模板引擎的渲染方法，该方法需传递两个参数：
     // 第一个参数用于指定存储在vfews目录中的模板文件名
     // 第二个参数是一个JSON格式的对象，用于设置模板变量
+    console.log(req.ip)
     res.render('index',{
         name: myName+' EJS', // 传递模板变量的值
         messages : ['owlman', '2022-3-30']
