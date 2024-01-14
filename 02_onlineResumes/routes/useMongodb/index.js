@@ -1,7 +1,7 @@
 // 引入 mongodb 扩展包
 const { MongoClient } = require('mongodb');
 // 设置数据库所在的服务器连接地址和端口号
-const serverUrl = 'mongodb://localhost:27017';
+const serverUrl = 'mongodb://resumes_db:27017';
 // 设置要使用的数据库名称
 const databaseName = 'online_resumes';
 // 创建数据库的连接对象
@@ -13,15 +13,15 @@ const MongodbApi = {
         try {
             if(typeof this.conn == 'undefined') {
                 this.conn = await client.connect();
-                console.log('数据库连接成功！' );  
+                console.log('数据库连接成功！' );
             }
-            if(typeof this.collect == 'undefined' || 
+            if(typeof this.collect == 'undefined' ||
                 this.collect.collectName !== collectName) {
                     const db = this.conn.db(databaseName);
                     this.collect = await db.collection(collectName);
                 }
         } catch(error) {
-            console.log('数据库连接错误：' + error);  
+            console.log('数据库连接错误：' + error);
         }
     },
 
@@ -41,11 +41,11 @@ const MongodbApi = {
             await this.collect.insertOne(jsonData);
             return true;
         } catch(error) {
-            console.log('数据插入错误：' + error);  
+            console.log('数据插入错误：' + error);
             return false;
         };
     },
-    
+
     // 创建用于查看指定数据集中所有数据的 API
     getAll : async function(collectName) {
         try {
@@ -53,7 +53,7 @@ const MongodbApi = {
             const result = await this.collect.find({}).toArray();
             return result;
         } catch(error) {
-            console.log('数据查询错误：' + error);  
+            console.log('数据查询错误：' + error);
             return false;
         }
     },
@@ -67,7 +67,7 @@ const MongodbApi = {
                 await this.collect.find({[key] : Number(id)}).toArray();
             return result;
         } catch(error) {
-            console.log('数据查询错误：' + error);  
+            console.log('数据查询错误：' + error);
             return false;
         }
     },
@@ -80,7 +80,7 @@ const MongodbApi = {
             const result = await this.collect.find(userData).toArray();
             return result;
         } catch(error) {
-            console.log('数据查询错误：' + error);  
+            console.log('数据查询错误：' + error);
             return false;
         }
     },
@@ -94,7 +94,7 @@ const MongodbApi = {
             }).toArray();
         return result;
         } catch(error) {
-            console.log('数据查询错误：' + error);  
+            console.log('数据查询错误：' + error);
             return false;
         }
     },
@@ -104,11 +104,11 @@ const MongodbApi = {
         try {
             await this.openCollect(collectName);
             const key = collectName == 'users' ? 'uid' : 'cv_id';
-            await this.collect.updateOne({[key] : Number(id)}, 
+            await this.collect.updateOne({[key] : Number(id)},
                                                             {$set : jsonData});
             return true;
         } catch(error) {
-            console.log('数据修改错误：' + error);  
+            console.log('数据修改错误：' + error);
             return false;
         }
     },
@@ -121,7 +121,7 @@ const MongodbApi = {
             await this.collect.deleteOne({[key] : Number(id)});
             return true;
         } catch(error) {
-            console.log('数据删除错误：'+error);  
+            console.log('数据删除错误：'+error);
             return false;
         }
     },
@@ -131,7 +131,7 @@ const MongodbApi = {
         try {
             await client.close();
         } catch (error) {
-            console.log('数据库关闭错误：'+error);  
+            console.log('数据库关闭错误：'+error);
         }
     }
 }
@@ -140,7 +140,7 @@ module.exports = MongodbApi;
 
 // 以下为测试代码
 // async function testAPI(dbApi) {
-//     try { 
+//     try {
 //         // 测试插入数据
 //         await dbApi.insert('resumes',{
 //             "cv_id": 202202042,

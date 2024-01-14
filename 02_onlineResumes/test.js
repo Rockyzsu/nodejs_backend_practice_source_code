@@ -1,7 +1,7 @@
 // 引入 mongodb 扩展包
 const { MongoClient } = require('mongodb');
 // 设置数据库所在的服务器连接地址和端口号
-const serverUrl = 'mongodb://localhost:27017';
+const serverUrl = 'mongodb://reumes_db:27017';
 // 设置要使用的数据库名称
 const databaseName = 'online_resumes';
 // 创建数据库的连接对象
@@ -15,9 +15,9 @@ const client = new MongoClient(serverUrl);
 //         const collect = db .collection('users');
 //         console.log('数据库连接成功！');
 //     } catch(error) {
-//         console.log('数据库连接错误：' + error);  
+//         console.log('数据库连接错误：' + error);
 //     } finally {
-//         await client.close();  
+//         await client.close();
 //     }
 // }
 // test()
@@ -32,14 +32,14 @@ MongodbApi.insert = async function(collectName, jsonData) {
         const db = client.db(databaseName);
         const collect = db .collection('users');
         await collect.insertOne(jsonData);
-        console.log('数据库连接成功！' );  
+        console.log('数据库连接成功！' );
         return true;
     } catch(error) {
-        console.log('数据库连接错误：' + error);  
+        console.log('数据库连接错误：' + error);
         return false;
     } finally {
         // 关闭数据库连接
-        await client.close();  
+        await client.close();
     }
 }
 
@@ -51,14 +51,14 @@ MongodbApi.getAll = async function(collectName) {
         const collect = db .collection('users');
         const result = await collect.find({});
         // console.log(await result.toArray());
-        console.log('数据库连接成功！' );  
+        console.log('数据库连接成功！' );
         return await result.toArray();
     } catch(error) {
-        console.log('数据库连接错误：' + error);  
+        console.log('数据库连接错误：' + error);
         return false;
     } finally {
         // 关闭数据库连接
-        await client.close();  
+        await client.close();
     }
 };
 
@@ -69,14 +69,14 @@ MongodbApi.getDataById = async function(collectName, id) {
         const db = client.db(databaseName);
         const collect = db .collection('users');
         const result = await collect.find({'cv_id' : Number(id)}).toArray();
-        console.log('数据库连接成功！' );  
+        console.log('数据库连接成功！' );
         return result;
     } catch(error) {
-        console.log('数据库连接错误：' + error);  
+        console.log('数据库连接错误：' + error);
         return false;
     } finally {
         // 关闭数据库连接
-        await client.close();  
+        await client.close();
     }
 };
 
@@ -87,14 +87,14 @@ MongodbApi.getResumeByName = async function(name) {
         const db = client.db(databaseName);
         const collect = db .collection('users');
         const result = await collect.find({'name' : name}).toArray();
-        console.log('数据库连接成功！' );  
+        console.log('数据库连接成功！' );
         return result;
     } catch(error) {
-        console.log('数据库连接错误：' + error);  
+        console.log('数据库连接错误：' + error);
         return false;
     } finally {
         // 关闭数据库连接
-        await client.close();  
+        await client.close();
     }
 };
 
@@ -105,14 +105,14 @@ MongodbApi.update = async function(collectName, id, jsonData) {
         const db = client.db(databaseName);
         const collect = db .collection('users');
         await collect.updateOne({'cv_id' : Number(id)}, {$set : jsonData});
-        console.log('数据库连接成功！' );  
+        console.log('数据库连接成功！' );
         return true;
     } catch(error) {
-        console.log('数据库连接错误：' + error);  
+        console.log('数据库连接错误：' + error);
         return false;
     } finally {
         // 关闭数据库连接
-        await client.close();  
+        await client.close();
     }
 };
 
@@ -123,21 +123,21 @@ MongodbApi.delete = async function(collectName, id) {
         const db = client.db(databaseName);
         const collect = db .collection('users');
         await collect.deleteOne({'cv_id' : Number(id)});
-        console.log('数据库连接成功！' );  
+        console.log('数据库连接成功！' );
         return true;
     } catch(error) {
-        console.log('数据库连接错误：'+error);  
+        console.log('数据库连接错误：'+error);
         return false;
     } finally {
         // 关闭数据库连接
-        await client.close();  
+        await client.close();
     }
 };
 
 module.exports = MongodbApi;
 
 async function testAPI(dbApi) {
-    try { 
+    try {
         // 测试插入数据
         await dbApi.insert('resumes',{
             "cv_id": 202202042,

@@ -32,6 +32,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // 加载 cookie-parser 中间件
 app.use(cookieParser());
+//app.set('view engine', 'ejs')
 // 将静态资源目录改为 webClient/dist' 目录
 // app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'webClient/dist')));

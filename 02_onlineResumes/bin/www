@@ -8,7 +8,7 @@ const debug = require('debug')('02-onlineresumes:server');
 const http = require('http');
 
 // 设置服务器使用的端口号，默认为3000
-const port = normalizePort(process.env.PORT || '3001');
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 // 引入 app 模块中的定义创建 HTTP 服务器
